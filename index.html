@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chuyển tệp thành index.html</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input[type="file"] {
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Đổi tên tệp thành index.html</h2>
+    <input type="file" id="fileInput" />
+    <br>
+    <button onclick="convertToIndex()">Tải về dưới dạng index.html</button>
+  </div>
+
+  <script>
+    function convertToIndex() {
+      const fileInput = document.getElementById('fileInput');
+      
+      if (fileInput.files.length === 0) {
+        alert("Vui lòng chọn một tệp trước!");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const blob = new Blob([e.target.result], { type: 'text/html' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'index.html'; // Tên tệp đầu ra
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  </script>
+
+</body>
+</html>
